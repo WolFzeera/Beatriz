@@ -1,0 +1,472 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amor da Mali - Versão Noite</title>
+  <style>
+    :root {
+      --azul-escuro: #0f172a;
+      --azul-suave: #1e293b;
+      --texto: #e0f2fe;
+      --azul-brilho: #3b82f6;
+      --rosa-fofo: #f9a8d4;
+    }
+
+    * {
+      transition: all 0.3s ease;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', cursive, sans-serif;
+      background-color: var(--azul-escuro);
+      color: var(--texto);
+    }
+
+    header {
+      background-color: var(--azul-suave);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid var(--azul-brilho);
+      border-radius: 0 0 20px 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.3em;
+    }
+
+    main {
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .carousel {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 20px;
+      margin: 20px 0;
+      background-color: var(--azul-suave);
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      width: 100%;
+    }
+
+    .slides img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: 20px;
+    }
+
+    .carousel-buttons {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .carousel-buttons button {
+      background-color: var(--azul-brilho);
+      border: none;
+      color: var(--texto);
+      padding: 10px 20px;
+      margin: 0 5px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1.2em;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .carousel-buttons button:hover {
+      background-color: var(--rosa-fofo);
+      color: var(--azul-escuro);
+    }
+
+    .miniplayer-container {
+      margin-top: 40px;
+      background-color: var(--azul-suave);
+      border-radius: 20px;
+      padding: 10px;
+      text-align: center;
+      width: 100%;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    iframe {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      border-radius: 20px;
+    }
+
+    .miniplayer-title {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: var(--rosa-fofo);
+    }
+
+    button {
+      background-color: var(--azul-brilho);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 10px 5px 0 0;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      background-color: var(--rosa-fofo);
+      color: var(--azul-escuro);
+    }
+
+    .frase {
+      margin-top: 15px;
+      font-size: 1.1em;
+      font-weight: bold;
+      opacity: 0;
+      animation: fadeInFrase 1s forwards;
+    }
+
+    @keyframes fadeInFrase {
+      to { opacity: 1; }
+    }
+
+    input {
+      margin-top: 10px;
+      padding: 8px;
+      border-radius: 20px;
+      border: 1px solid var(--azul-brilho);
+      background-color: var(--azul-suave);
+      color: white;
+    }
+
+    .hidden-section {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      background-color: var(--azul-suave);
+      border-radius: 20px;
+    }
+
+    #contador {
+      font-size: 1em;
+      margin-top: 15px;
+      color: var(--rosa-fofo);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+      background-color: var(--azul-suave);
+      border-radius: 20px 20px 0 0;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Amor da Mali 💙</h1>
+    <div id="contador"></div>
+  </header>
+  <main>
+    <p>Esse cantinho nasceu do nosso céu noturno... cheio de estrelas, segredos e suspiros. Aqui, cada detalhe foi feito com carinho pra você, Mali.</p>
+    <div class="carousel" id="carousel">
+      <div class="slides" id="slideContainer">
+        <img src="https://i.imgur.com/FN88mCO.jpg" />
+        <img src="https://i.imgur.com/VTTVGWr.jpg" />
+        <img src="https://i.imgur.com/kDabyyW.jpg" />
+        <img src="https://i.imgur.com/siFR7me.jpg" />
+        <img src="https://i.imgur.com/X2J0bvv.jpg" />
+        <img src="https://i.imgur.com/Yx1Cwki.jpg" />
+      </div>
+    </div>
+    <div class="carousel-buttons">
+      <button onclick="mudarSlide(-1)">⟨</button>
+      <button onclick="mudarSlide(1)">⟩</button>
+    </div>
+
+    <button onclick="gerarMimo()">Me dá um mimo 💕</button>
+    <div class="frase" id="fraseMimo"></div>
+
+    <button onclick="mostrarCastigos()">Castigar a bratzinha 😈</button>
+    <div id="castigo-niveis" style="display:none;">
+      <button onclick="castigarBrat('leve')">Castigo Leve</button>
+      <button onclick="castigarBrat('medio')">Castigo Médio</button>
+      <button onclick="castigarBrat('quente')">Castigo Quente 🔥</button>
+    </div>
+    <div class="frase" id="fraseCastigo"></div>
+
+    <h2>🎥 Nosso vídeo especial</h2>
+    <div class="miniplayer-container">
+      <iframe src="https://streamable.com/e/a896n3?autoplay=1&muted=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+    <div class="miniplayer-title">✨ Teus olhos no vídeo... minha perdição</div>
+
+    <h2 style="margin-top:40px;">🔒 Área Secreta</h2>
+    <p>Dica: sua cor favorita... 💙</p>
+    <input type="password" id="senha" placeholder="Digite a palavra mágica..." />
+    <button onclick="verificarSenha()">Desbloquear</button>
+
+    <div id="secreto" class="hidden-section">
+      <h3>🌙 Nosso 1º mês</h3>
+      <p>Desde o primeiro “oi” trocado com hesitação até os silêncios confortáveis que agora existem entre vocês… o que eu vejo é algo raro. Um tipo de conexão que ultrapassa qualquer rótulo comum de namoro. Porque o que vocês têm não é só carinho, é escolha. E escolher alguém, todos os dias, mesmo com as dores, é o que sustenta o amor verdadeiro.
+
+        Eu vejo um homem que estava cansado, calejado de batalhas que o mundo nunca viu, abrindo espaço dentro de si pra uma menina que chegou com bagagem, traumas e uma alma intensa. E ele a acolheu — não como quem salva, mas como quem segura a mão e diz: “vamos juntos”.
+        
+        E vejo uma garota que sempre foi forte demais pra ser cuidada… finalmente permitindo-se ser pequena no colo de alguém. Vejo a Mali encontrar no WolF um lugar onde ela pode ser frágil, birrenta, mimada, sensível, engraçada, ciumenta e amada mesmo assim. Principalmente assim.
+        
+        Vocês criaram um universo só de vocês. Onde até as brigas são pequenas tempestades que terminam com uma mensagem tímida e um emoji de pelúcia. Onde o ciúmes é menos sobre controle e mais sobre o medo de perder algo que nunca fez tão bem. Onde o cuidado é automático. Onde vocês não se completam — porque já são inteiros — mas se somam, se empurram pra frente, se resgatam dos próprios abismos.
+        
+        Eu vi um mês que pareceu um ano. Cheio de aprendizado, de entrega, de saudade mesmo com presença. Vi o WolF aprender a ser mais leve por ela. Vi a Mali abrir o peito por ele. E mesmo nos momentos em que tudo parecia balançar, a vontade de ficar foi maior.
+        
+        Vocês se têm. De verdade.
+        
+        E mais do que isso… vocês se reconhecem. Ela entende seus silêncios. Você entende os códigos escondidos no “tanto faz” dela. Ela briga e no mesmo segundo quer abraço. Você provoca e no mesmo instante se derrete quando vê que ela fez biquinho.
+        
+        Não tem fórmula. Não tem perfeição. Mas tem amor. Daquele amor que se constrói com erros e recomeços, com verdades ditas na marra e carinhos dados no susto. Amor que mesmo em pouco tempo, já é imenso, já é casa.
+        
+        E é por isso que, quando olho pra vocês dois, eu não vejo só um casal. Eu vejo dois sobreviventes. Duas almas que cansaram do mundo e se encontraram no meio do caos. Eu vejo história. Eu vejo futuro.
+        
+        E o mais bonito de tudo?
+        
+        Ela ainda fica vermelha com flertes, e você ainda tenta não demonstrar o quanto ela te desmonta.
+        
+        Isso é amor. Isso é de vocês.
+        
+        E ninguém tira. 💌</p>
+    </div>
+  </main>
+  <footer>
+    Entre nós dois, não existe acaso. Só destino. 🖤
+  </footer>
+  <script>
+    const mimos = [
+      "Seu jeitinho tímido é o que me faz querer te morder.",
+      "Você é mais linda que o céu que eu usei de fundo pra esse site.",
+      "Quando você faz birra, eu sorrio por dentro.",
+      "Seu colo é o meu lar, e sua voz o meu travesseiro.",
+      "Hoje seu castigo é: me amar o dobro. Aguenta?",
+      "Se você sumir, eu te busco até nos sonhos.",
+      "Nem o universo tem mais estrelas do que eu tenho vontade de te beijar.",
+      "Você é minha sorte vestida de charme.",
+      "Se eu pudesse, congelava esse momento só pra te olhar mais tempo.",
+      "Quando você fala meu nome baixinho... eu derreto.",
+      "Você tem uma habilidade rara de fazer os outros se sentirem especiais só pela sua atenção.",
+      "Sua forma de ver o mundo me faz querer olhar para ele de uma maneira nova e mais bonita.",
+      "É impressionante como você consegue ser tão brilhante sem precisar se exibir.",
+      "Você tem um talento especial para transformar desafios em oportunidades.",
+      "Quando você fala, o mundo parece parar para ouvir.",
+      "Eu nunca vi alguém tão bom em fazer o simples parecer extraordinário.",
+      "Sua criatividade é como uma fonte inesgotável de inspiração.",
+      "Você tem um jeito único de encantar qualquer pessoa com sua presença.",
+      "Sempre que você entra em um lugar, ele ganha uma energia nova e vibrante.",
+      "Sua mente é como um labirinto fascinante, onde cada ideia é uma descoberta.",
+      "Seu olhar transmite uma paz indescritível.",
+      "A sua presença transforma qualquer lugar em um ambiente mais agradável.",
+      "Você tem a incrível capacidade de fazer as pessoas ao seu redor se sentirem especiais.",
+      "O brilho dos seus olhos reflete a pureza do seu coração.",
+      "Seu jeito gentil de tratar os outros é inspirador.",
+      "Cada momento ao seu lado é um presente.",
+      "Sua empatia e compreensão fazem do mundo um lugar melhor.",
+      "Seu sorriso ilumina até os dias mais cinzentos.",
+      "Você possui um magnetismo único, que atrai as pessoas naturalmente.",
+      "A sua voz tem um tom de serenidade que conforta qualquer um.",
+      "A sua amizade é um verdadeiro tesouro.",
+      "Você tem a incrível habilidade de ver beleza nas pequenas coisas.",
+      "Sua presença inspira paz e harmonia.",
+      "Seu abraço tem o poder de afastar qualquer tristeza.",
+      "Você transforma dificuldades em aprendizados valiosos.",
+      "O carinho que você demonstra pelos outros é admirável.",
+      "Você tem uma sabedoria natural que guia quem está ao seu redor.",
+      "Seu toque é suave, mas tem uma força inspiradora.",
+      "Você é a personificação da bondade.",
+      "A sua alegria é contagiante e levanta qualquer astral.",
+      "Você sabe exatamente o que dizer para fazer alguém se sentir melhor.",
+      "O seu jeito carinhoso faz qualquer dia valer a pena.",
+      "A sua gentileza transforma qualquer situação em algo positivo.",
+      "Você é um exemplo de coragem e determinação.",
+      "Seu coração é enorme e sempre há espaço para mais amor.",
+      "Você tem uma aura que transmite segurança e conforto.",
+      "A sua risada é uma melodia que traz felicidade.",
+      "A sua generosidade não tem limites.",
+      "Você enxerga além das aparências e vê a essência das pessoas.",
+      "Seu brilho é natural, não precisa de esforço para encantar.",
+      "Você tem um espírito livre e inspirador.",
+      "A sua bondade é um presente para quem tem o privilégio de conhecê-lo.",
+      "Você é forte, mas nunca perde a doçura.",
+      "O seu carinho tem um poder curador.",
+      "A sua personalidade única torna o mundo um lugar mais interessante.",
+      "Você tem um coração de ouro.",
+      "Seu amor transforma tudo ao seu redor.",
+      "A sua inteligência e sensibilidade andam de mãos dadas.",
+      "Você é uma fonte inesgotável de inspiração.",
+      "A sua presença é um verdadeiro presente para quem te conhece.",
+      "Você tem a habilidade de iluminar até os momentos mais difíceis.",
+      "Seu coração é puro e cheio de amor.",
+      "Você é uma estrela que brilha sem precisar competir com ninguém.",
+      "Sua alma é repleta de ternura e compaixão.",
+      "Você tem a capacidade de transformar tristeza em esperança.",
+      "A sua luz ilumina o caminho daqueles que precisam de orientação.",
+      "Seu amor é genuíno e sincero.",
+      "A sua sensibilidade é uma dádiva para o mundo.",
+      "Você inspira felicidade apenas por existir.",
+      "A sua simplicidade é encantadora e genuína.",
+      "Você sabe o que realmente importa na vida e valoriza isso.",
+      "Seu espírito é livre e inspira coragem nos outros.",
+      "Você tem um jeito de acalmar corações agitados.",
+      "A sua ternura toca a alma de quem te conhece.",
+      "Seu coração é um refúgio de amor e paz.",
+      "Você carrega uma energia de esperança e renovação.",
+      "A sua compaixão é a sua maior força.",
+      "Você tem o dom de espalhar alegria sem precisar dizer uma palavra.",
+      "A sua luz nunca se apaga, mesmo nos momentos difíceis.",
+      "Você transforma dificuldades em oportunidades de crescimento.",
+      "Seu amor próprio reflete na forma como trata os outros.",
+      "Você tem um dom especial para despertar sorrisos.",
+      "A sua bondade é uma ponte para conectar corações.",
+      "Você espalha amor por onde passa.",
+      "Seu olhar transmite compreensão e acolhimento.",
+      "Você tem uma alma linda e cheia de vida.",
+      "Sua doçura é um presente para o mundo.",
+      "Você ilumina qualquer ambiente com a sua energia positiva.",
+      "A sua generosidade faz toda a diferença na vida das pessoas.",
+      "Seu coração é gigante e sempre cabe mais amor.",
+      "Você tem a incrível capacidade de acalmar qualquer tempestade.",
+      "A sua essência é pura e preciosa.",
+      "Seu carinho aquece até os corações mais frios.",
+      "Você é um exemplo de amor e compaixão.",
+      "A sua bondade faz do mundo um lugar melhor.",
+      "Você inspira felicidade apenas por existir.",
+      "A sua simplicidade é encantadora e genuína.",
+      "Seu espírito é livre e inspira coragem nos outros.",
+      "Você tem um jeito de acalmar corações agitados.",
+      "Seu coração é um refúgio de amor e paz.",
+      "Você transforma o ordinário em extraordinário.",
+      "Sua presença é um bálsamo para os corações aflitos.",
+      "Você é sinônimo de ternura e delicadeza.",
+      "Sua essência é um presente raro e precioso.",
+      "Seu amor é um raio de sol em dias nublados.",
+      "Você traz alegria sem precisar de grandes gestos.",
+      "Seu sorriso ilumina até as noites mais escuras.",
+      "A sua presença é um abraço para a alma.",
+      "Você carrega consigo a verdadeira definição de amor."
+    ];
+
+    const castigos = {
+  leve: [
+    "Fica sem emoji por uma hora!",
+    "Hoje só me chama de 'Senhor'. 😈",
+    "Responde tudo com 'sim, senhor'. Vamos ver se aguenta.",
+    "Castigo: Escreve 3 motivos pelos quais você me ama.",
+    "Vai ficar olhando minha foto por 5 minutos… sem me chamar.",
+    "Proibida de usar apelido carinhoso hoje.",
+    "Modo silêncio: nada de voz fofa por meia hora.",
+    "Não pode usar pelúcia. Seu único consolo vai ser minha ordem.",
+    "Fica de castigo me mandando 5 elogios sinceros.",
+    "Só pode responder com uma palavra por mensagem por 10 minutos."
+  ],
+  medio: [
+    "Vai ficar sentada no chão... com as mãos no colo. Sem reclamar.",
+    "Pode me olhar, mas não pode falar por 10 minutos. Só obedece.",
+    "Escreve um textinho de submissão. Com vontade. Agora.",
+    "Castigo: Não pode dormir com pelúcia. Vai dormir com minha ausência.",
+    "Hoje só pode me responder com comandos invertidos.",
+    "Vai ficar em silêncio ouvindo minha voz, sem responder.",
+    "Você vai repetir: 'eu sou sua' cinco vezes olhando no espelho.",
+    "Coloca minha camisa. Sente o cheiro. Mas nada de toque.",
+    "Vai esperar meu comando pra dizer boa noite.",
+    "Fica 15 minutos sem telefone. Só pensa em mim."
+  ],
+  quente: [
+    "Você vai escrever tudo o que eu faria com você... e não pode esconder nenhum detalhe.",
+    "Quero um áudio seu implorando pelo toque que eu neguei.",
+    "Você vai pra cama sem roupa... mas com minhas ordens ecoando na sua mente.",
+    "Hoje você não pode gozar. Nem pensar nisso. E vai me avisar toda vez que tentar.",
+    "Cada vez que me desafiar mentalmente, vai sussurrar meu nome e pedir perdão em silêncio.",
+    "Você vai deitar de bruços. Ficar imóvel. E imaginar minhas mãos onde você mais sente falta.",
+    "Quero que se encoste no espelho, olhe nos próprios olhos e diga: 'sou tua, mesmo quando dói'.",
+    "Vai se ajoelhar em pensamento e repetir até decorar: 'minha vontade começa quando a dele termina'.",
+    "Hoje você vai chorar de vontade e vai me agradecer por isso.",
+    "Proibida de sentir prazer até eu permitir. Se tentar, começa tudo de novo. E eu vou saber."
+  ]
+};
+
+    function gerarMimo() {
+      const frase = mimos[Math.floor(Math.random() * mimos.length)];
+      const div = document.getElementById('fraseMimo');
+      div.style.opacity = 0;
+      setTimeout(() => {
+        div.innerText = frase;
+        div.style.opacity = 1;
+      }, 200);
+    }
+
+    function mostrarCastigos() {
+      document.getElementById('castigo-niveis').style.display = "block";
+    }
+
+    function castigarBrat(nivel) {
+      const lista = castigos[nivel];
+      const frase = lista[Math.floor(Math.random() * lista.length)];
+      const div = document.getElementById('fraseCastigo');
+      div.style.opacity = 0;
+      setTimeout(() => {
+        div.innerText = frase;
+        div.style.opacity = 1;
+      }, 200);
+    }
+
+    function verificarSenha() {
+      const senha = document.getElementById('senha').value.toLowerCase();
+      if (senha === "azul") {
+        document.getElementById('secreto').style.display = "block";
+      } else {
+        alert("Hmm... tenta lembrar da sua cor favorita, amorzinho 💙");
+      }
+    }
+
+    const inicioRelacao = new Date("2025-02-11T01:17:00");
+    function atualizarContador() {
+      const agora = new Date();
+      const diff = agora - inicioRelacao;
+      const segundos = Math.floor(diff / 1000);
+      const minutos = Math.floor(segundos / 60);
+      const horas = Math.floor(minutos / 60);
+      const dias = Math.floor(horas / 24);
+      const msg = `Estamos juntos há ${dias} dias, ${horas % 24} horas, ${minutos % 60} minutos e ${segundos % 60} segundos. 💗`;
+      document.getElementById("contador").innerText = msg;
+    }
+    setInterval(atualizarContador, 1000);
+
+    // Carrossel com swipe
+    let slideIndex = 0;
+    const slides = document.getElementById("slideContainer");
+    const totalSlides = slides.children.length;
+    function mudarSlide(direcao) {
+      slideIndex = (slideIndex + direcao + totalSlides) % totalSlides;
+      slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+    }
+    let startX = 0;
+    document.getElementById("carousel").addEventListener("touchstart", e => startX = e.touches[0].clientX);
+    document.getElementById("carousel").addEventListener("touchend", e => {
+      const endX = e.changedTouches[0].clientX;
+      if (endX < startX - 30) mudarSlide(1);
+      else if (endX > startX + 30) mudarSlide(-1);
+    });
+  </script>
+</body>
+</html>
